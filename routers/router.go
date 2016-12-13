@@ -24,8 +24,9 @@ func init() {
 	})
 
 	var FilterUser = func(ctx *context.Context) {
-		_, ok := ctx.Input.Session("uid").(int)
-		if !ok && ctx.Request.RequestURI != "/login" {
+		// _, ok := ctx.Input.Session("uid").(int)
+		// if !ok && ctx.Request.RequestURI != "/login" {
+		if ctx.Request.RequestURI != "/login" {
 			ctx.Redirect(302, "/login")
 		}
 	}
