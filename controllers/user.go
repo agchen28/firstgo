@@ -11,10 +11,8 @@ type UserController struct {
 	beego.Controller
 }
 
-//Index 测试用
+//Index 用户首页
 func (c *UserController) Index() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
 	c.Layout = "layout.tpl"
 	c.Render()
 }

@@ -22,4 +22,12 @@ func init() {
 	beego.Any("/foo", func(ctx *context.Context) {
 		ctx.Output.Body([]byte("bar"))
 	})
+
+	var FilterUser = func(ctx *context.Context) {
+		_, ok := ctx.Input.Session("uid").(int)
+		if !ok && ctx.Request.RequestURI != "/login" {
+			ctx.Redirect(302, "/login")
+		}
+	}
+	beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
 }
