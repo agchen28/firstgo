@@ -8,5 +8,5 @@ type HomeController struct {
 // Index 首页
 func (c *HomeController) Index() {
 	c.Data["UserName"] = c.CurrentUser.Name
-	c.Render()
+	c.ReturnView()
 }

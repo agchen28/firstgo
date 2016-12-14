@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"hello/common"
 	"hello/models"
 	"strings"
@@ -12,12 +13,6 @@ import (
 type BaseController struct {
 	beego.Controller
 	CurrentUser models.User
-}
-
-//Prepare runs after Init before request function execution.
-func (c *BaseController) Prepare() {
-	c.Layout = "layout.tpl"
-	checkLogin(c)
 }
 
 func checkLogin(c *BaseController) {
@@ -34,4 +29,37 @@ func checkLogin(c *BaseController) {
 			}
 		}
 	}
+}
+
+//Prepare runs after Init before request function execution.
+func (c *BaseController) Prepare() {
+	c.Layout = "layout.tpl"
+	checkLogin(c)
+}
+
+//ParseRequest 解析json数据到struct
+func (c *BaseController) ParseRequest(key string, obj interface{}) error {
+	data := []byte(c.GetString("data"))
+	return json.Unmarshal(data, obj)
+}
+
+//ReturnView 返回视图
+func (c *BaseController) ReturnView() {
+	c.Render()
+}
+
+//ReturnSimpleResult 返回json结果
+func (c *BaseController) ReturnSimpleResult(result *common.SimpleResult) {
+	c.Data["json"] = &result
+	c.ServeJSON()
+}
+
+//ReturnPageResult 返回json分页结果
+func (c *BaseController) ReturnPageResult(count int64, rows interface{}) {
+	pageList := common.PageList{
+		Total: count,
+		Rows:  rows,
+	}
+	c.Data["json"] = &pageList
+	c.ServeJSON()
 }

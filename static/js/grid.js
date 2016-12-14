@@ -359,7 +359,7 @@ function deleteRows(grid, url,deleteChildren) {
             }
             var deleted = grid.datagrid('getChanges', 'deleted');
             if (deleted != null && deleted.length > 0) {
-                var strDeleted = JSON.stringify(deleted);
+                var strDeleted = JSON.stringify(deleted[0]);
                 var data = {
                     'data': strDeleted
                 }

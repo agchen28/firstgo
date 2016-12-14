@@ -20,8 +20,8 @@ func init() {
 
 //User 测试用
 type User struct {
-	ID   int
-	Name string `form:"username"`
+	ID   int    `form:"ID"`
+	Name string `form:"Name"`
 }
 
 //Add 测试用
@@ -37,10 +37,9 @@ func (u *User) Add() bool {
 }
 
 //Update 测试用
-func (u *User) Update(name string) bool {
+func (u *User) Update() bool {
 	o := orm.NewOrm()
 	// update
-	u.Name = name
 	num, err := o.Update(u)
 	fmt.Printf("NUM: %d, ERR: %v\n", num, err)
 	if err != nil {
@@ -70,7 +69,10 @@ func (u *User) Delete() bool {
 	if err != nil {
 		return false
 	}
-	return true
+	if num > 0 {
+		return true
+	}
+	return false
 }
 
 //Paging 分页数据
@@ -83,11 +85,21 @@ func (u *User) Paging(page int, pageSize int) ([]*User, int64) {
 	qs = o.QueryTable(user) // 返回 QuerySeter
 	offset := (pageSize * (page - 1))
 	qs.Limit(pageSize, offset)
-	var users []*User
 	if u.Name != "" {
 		qs = qs.Filter("name__contains", u.Name)
 	}
+	var users []*User
 	qs.All(&users)
 	count, _ := qs.Count()
 	return users, count
+}
+
+//InsertMultiu 批量插入
+func InsertMultiu(u []User) (int64, error) {
+	o := orm.NewOrm()
+	num, err := o.InsertMulti(len(u), u)
+	if err != nil {
+		return num, err
+	}
+	return num, err
 }

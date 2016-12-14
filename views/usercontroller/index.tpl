@@ -66,7 +66,7 @@
             onClick: function () {
                 var name = $('#tbName').textbox('getText');
                 var param = {
-                    username: name
+                    Name: name
                 };
                 $.extend(true, FH.tree.treeSetting.param, param);
                 setting.grid.datagrid("reload", FH.tree.treeSetting.param);

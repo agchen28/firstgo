@@ -5,62 +5,72 @@ import (
 	"hello/models"
 )
 
-//UserController 测试用
+//UserController 控制器
 type UserController struct {
 	BaseController
 }
 
 //Index 用户首页
 func (c *UserController) Index() {
-	c.Render()
+	c.ReturnView()
 }
 
 //Update 更新
 func (c *UserController) Update() {
-	id, _ := c.GetInt("Id")
-	user := models.User{ID: id}
-	if user.Update(c.GetString("name")) {
-		c.Ctx.WriteString(user.Name)
+	result := common.SimpleResult{}
+	result.Error()
+	u := []models.User{}
+	if err := c.ParseRequest("data", &u); err == nil {
+		if len(u) > 0 {
+			if u[0].Update() {
+				result.Bingo()
+			}
+		}
 	}
+	c.ReturnSimpleResult(&result)
 }
 
 //Add 添加
 func (c *UserController) Add() {
-	name := c.GetString("name")
-	user := models.User{Name: name}
-	result := user.Add()
-	if result {
-		c.Ctx.WriteString("成功")
-	} else {
-		c.Ctx.WriteString("失败")
+	result := common.SimpleResult{}
+	result.Error()
+	u := []models.User{}
+	if err := c.ParseRequest("data", &u); err == nil {
+		if len(u) > 0 {
+			_, err := models.InsertMultiu(u)
+			if err == nil {
+				result.Bingo()
+			}
+		}
 	}
+	c.ReturnSimpleResult(&result)
 }
 
 //Delete 删除
 func (c *UserController) Delete() {
-	id, _ := c.GetInt("Id")
-	user := models.User{ID: id}
-	if user.Delete() {
-		c.Ctx.WriteString("删除成功")
+	result := common.SimpleResult{}
+	result.Error()
+	u := models.User{}
+	if err := c.ParseRequest("data", &u); err == nil {
+		if u.Delete() {
+			result.Bingo()
+		}
 	}
+	c.ReturnSimpleResult(&result)
 }
 
-//Page 测试用
+//Page 分页数据
 func (c *UserController) Page() {
 	u := models.User{}
 	if err := c.ParseForm(&u); err != nil {
 		//handle error
-
+		result := common.SimpleResult{}
+		result.Error()
+		c.ReturnSimpleResult(&result)
 	} else {
 		pageIndex, _ := c.GetInt("page")
 		pageSize, _ := c.GetInt("rows")
 		users, count := u.Paging(pageIndex, pageSize)
-		c.Data["users"] = users
-		mystruct := common.PageList{
-			Total: count,
-			Rows:  users,
-		}
-		c.Data["json"] = &mystruct
-		c.ServeJSON()
+		c.ReturnPageResult(count, users)
 	}
 }
