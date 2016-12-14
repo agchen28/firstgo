@@ -39,7 +39,8 @@ func (c *BaseController) Prepare() {
 
 //ParseRequest 解析json数据到struct
 func (c *BaseController) ParseRequest(key string, obj interface{}) error {
-	data := []byte(c.GetString("data"))
+	s := c.GetString("data")
+	data := []byte(s)
 	return json.Unmarshal(data, obj)
 }
 

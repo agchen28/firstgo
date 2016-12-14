@@ -35,7 +35,7 @@ func (c *UserController) Add() {
 	result := common.SimpleResult{}
 	result.Error()
 	u := []models.User{}
-	if err := c.ParseRequest("data", &u); err == nil {
+	if err := c.ParseRequest("data", u); err == nil {
 		if len(u) > 0 {
 			_, err := models.InsertMultiu(u)
 			if err == nil {

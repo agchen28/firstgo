@@ -1,8 +1,4 @@
 <body class="easyui-layout">
-    <div region="west" border="true" split="true" class="west" title="操作类别" style="padding: 0 0 0 0">
-        <ul id="tree">
-        </ul>
-    </div>
     <div region="center" border="true" split="true" title="">
          name:<input id="tbName" type="text" style="width: 300px"><a id="btnSearch" href="#">查询</a>
         <table id="grid">
@@ -20,11 +16,6 @@
 <script type="text/javascript" src="/static/js/validatebox.extend.js"></script>
 <script type="text/javascript">
     $(function () {
-        var treeSetting = {
-            tree: $("#tree"),
-            url: '/OperationCategory/GetCategoryTree',
-            param: {}
-        };
         var setting = {
             grid: $('#grid'),
             url: '/user/page',
@@ -51,13 +42,9 @@
             deleteUrl: '/user/delete',
             importUrl: '/user/Import',
             exportUrl: '/user/Export',
-            fileType: '.user',
-            treeId: 'CategoryIdentifier',
-            selected: true,
-            deleteChildren:true
+            fileType: '.user'
         }
         InitGrid(setting);
-        FH.tree.init(treeSetting, setting.grid);
         $('#tbName').textbox({
             width: 100
         });
@@ -68,8 +55,7 @@
                 var param = {
                     Name: name
                 };
-                $.extend(true, FH.tree.treeSetting.param, param);
-                setting.grid.datagrid("reload", FH.tree.treeSetting.param);
+                setting.grid.datagrid("reload", param);
             }
         });
     });
