@@ -21,7 +21,7 @@ func init() {
 //User 测试用
 type User struct {
 	ID   int
-	Name string
+	Name string `form:"username"`
 }
 
 //Add 测试用
@@ -71,4 +71,23 @@ func (u *User) Delete() bool {
 		return false
 	}
 	return true
+}
+
+//Paging 分页数据
+func (u *User) Paging(page int, pageSize int) ([]*User, int64) {
+	o := orm.NewOrm()
+	// 获取 QuerySeter 对象，user 为表名
+	qs := o.QueryTable("user")
+	// 也可以直接使用对象作为表名
+	user := new(User)
+	qs = o.QueryTable(user) // 返回 QuerySeter
+	offset := (pageSize * (page - 1))
+	qs.Limit(pageSize, offset)
+	var users []*User
+	if u.Name != "" {
+		qs = qs.Filter("name__contains", u.Name)
+	}
+	qs.All(&users)
+	count, _ := qs.Count()
+	return users, count
 }

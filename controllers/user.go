@@ -1,23 +1,21 @@
 package controllers
 
 import (
+	"hello/common"
 	"hello/models"
-
-	"github.com/astaxie/beego"
 )
 
 //UserController 测试用
 type UserController struct {
-	beego.Controller
+	BaseController
 }
 
 //Index 用户首页
 func (c *UserController) Index() {
-	c.Layout = "layout.tpl"
 	c.Render()
 }
 
-//Update 测试用
+//Update 更新
 func (c *UserController) Update() {
 	id, _ := c.GetInt("Id")
 	user := models.User{ID: id}
@@ -26,7 +24,7 @@ func (c *UserController) Update() {
 	}
 }
 
-//Add 测试用
+//Add 添加
 func (c *UserController) Add() {
 	name := c.GetString("name")
 	user := models.User{Name: name}
@@ -38,7 +36,7 @@ func (c *UserController) Add() {
 	}
 }
 
-//Delete 测试用
+//Delete 删除
 func (c *UserController) Delete() {
 	id, _ := c.GetInt("Id")
 	user := models.User{ID: id}
@@ -47,16 +45,22 @@ func (c *UserController) Delete() {
 	}
 }
 
-//Read 测试用
-func (c *UserController) Read() {
-	// id, _ := c.GetInt("Id")
-	// user := models.User{ID: id}
-	name := c.GetString("name")
-	user := models.User{Name: name}
-	result := user.Read()
-	if result {
-		c.Ctx.WriteString(user.Name)
+//Page 测试用
+func (c *UserController) Page() {
+	u := models.User{}
+	if err := c.ParseForm(&u); err != nil {
+		//handle error
+
 	} else {
-		c.Ctx.WriteString("不存在")
+		pageIndex, _ := c.GetInt("page")
+		pageSize, _ := c.GetInt("rows")
+		users, count := u.Paging(pageIndex, pageSize)
+		c.Data["users"] = users
+		mystruct := common.PageList{
+			Total: count,
+			Rows:  users,
+		}
+		c.Data["json"] = &mystruct
+		c.ServeJSON()
 	}
 }

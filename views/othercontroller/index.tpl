@@ -30,7 +30,16 @@
             url: '/user/page',
             columns: [
             { field: 'ck', checkbox: true },
-            { field: 'ID', title: 'ID'},
+            { field: 'CategoryIdentifier', title: 'CategoryIdentifier' },
+            { field: 'Identifier', title: 'Identifier',
+                editor: {
+                    type: 'validatebox',
+                    options: {
+                        required: true, //必填
+                        validType: "Identifier"
+                    }
+                }
+            },
             { field: 'Name', title: 'Name',
                 editor: {
                     type: 'validatebox',
@@ -39,16 +48,43 @@
                         validType: "length[0,50]"//限制长度
                     }
                 }
+            },
+            { field: 'OrderNum', title: 'OrderNum', align: 'right', editor: { type: 'numberspinner'} },
+            { field: 'IsShow', title: 'IsShow', align: 'center',
+                formatter: function (value) {
+                    if (value == true) {
+                        return "显示";
+                    } else {
+                        return "隐藏";
+                    }
+                },
+                editor: {
+                    type: 'combobox',
+                    options: {
+                        valueField: 'value',
+                        textField: 'label',
+                        data: [{
+                            label: '显示',
+                            value: 'true'
+                        }, {
+                            label: '隐藏',
+                            value: 'false'
+                        }]
+                    }
+                }
             }
         ],
             queryParams: {},
             newRow: {
-                ID: '',
-                Name: ''
+                CategoryIdentifier: '',
+                Identifier: '',
+                Name: '',
+                OrderNum: 0,
+                IsShow: 'true'
             },
-            addUrl: "/user/add",
-            editUrl: '/user/update',
-            deleteUrl: '/user/delete',
+            addUrl: "/user/AddRows",
+            editUrl: '/user/EditRows',
+            deleteUrl: '/user/DeleteRows',
             importUrl: '/user/Import',
             exportUrl: '/user/Export',
             fileType: '.user',

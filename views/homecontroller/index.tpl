@@ -50,7 +50,7 @@
                     </li>
                     <li class="iconnav">
                         <div>
-                            <a href="javascript:loginOut('/Entry/Logout')">退出登录</a>
+                            <a href="javascript:loginOut('/entry/logout')">退出登录</a>
                         </div>
                     </li>
                 </ul>
@@ -59,7 +59,7 @@
     </div>
     <div region="south" border="true" split="true" style="overflow: hidden; height: 40px;">
         <div class="footer">
-            版权所有：<a href="http://www.edisonchen.xyz" target="_blank">zzz</a>
+            版权所有：<a href="http://www.edisonchen.xyz" target="_blank">{{.UserName}}</a>
         </div>
     </div>
     <div id="tabsMenu" class="easyui-menu" style="width: 120px;">

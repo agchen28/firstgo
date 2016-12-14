@@ -1,14 +1,12 @@
 package controllers
 
-import (
-	"github.com/astaxie/beego"
-)
-
+//HomeController 控制器
 type HomeController struct {
-	beego.Controller
+	BaseController
 }
 
+// Index 首页
 func (c *HomeController) Index() {
-	c.Layout = "layout.tpl"
+	c.Data["UserName"] = c.CurrentUser.Name
 	c.Render()
 }

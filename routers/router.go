@@ -8,11 +8,12 @@ import (
 )
 
 func init() {
+	beego.Router("/", &controllers.MainController{})
 	beego.AutoRouter(&controllers.UserController{})
 	beego.AutoRouter(&controllers.HomeController{})
-	beego.Router("/", &controllers.MainController{})
-	beego.Router("/user", &controllers.UserController{})
-	beego.Router("/home", &controllers.HomeController{})
+	beego.AutoRouter(&controllers.EntryController{})
+	// beego.Router("/user", &controllers.UserController{})
+	// beego.Router("/home", &controllers.HomeController{})
 	beego.Get("/be", func(ctx *context.Context) {
 		ctx.Output.Body([]byte("hello world"))
 	})
@@ -22,13 +23,4 @@ func init() {
 	beego.Any("/foo", func(ctx *context.Context) {
 		ctx.Output.Body([]byte("bar"))
 	})
-
-	var FilterUser = func(ctx *context.Context) {
-		// _, ok := ctx.Input.Session("uid").(int)
-		// if !ok && ctx.Request.RequestURI != "/login" {
-		if ctx.Request.RequestURI != "/login" {
-			ctx.Redirect(302, "/login")
-		}
-	}
-	beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
 }
