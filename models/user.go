@@ -3,13 +3,18 @@ package models
 import (
 	"fmt"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // import your used driver
 )
 
 func init() {
+	mysqluser := beego.AppConfig.String("mysqluser")
+	mysqlpass := beego.AppConfig.String("mysqlpass")
+	mysqlurls := beego.AppConfig.String("mysqlurls")
+	mysqldb := beego.AppConfig.String("mysqldb")
 	// set default database
-	orm.RegisterDataBase("default", "mysql", "root:Abcd123456*@tcp(115.29.146.103:3306)/test?charset=utf8", 30)
+	orm.RegisterDataBase("default", "mysql", mysqluser+":"+mysqlpass+"@tcp("+mysqlurls+")/"+mysqldb+"?charset=utf8", 30)
 
 	// register model
 	orm.RegisterModel(new(User))
@@ -24,8 +29,8 @@ type User struct {
 	Name string `form:"Name"`
 }
 
-//Add 测试用
-func (u *User) Add() bool {
+//Create 创建
+func (u *User) Create() bool {
 	o := orm.NewOrm()
 	// insert
 	id, err := o.Insert(u)
@@ -36,19 +41,7 @@ func (u *User) Add() bool {
 	return true
 }
 
-//Update 测试用
-func (u *User) Update() bool {
-	o := orm.NewOrm()
-	// update
-	num, err := o.Update(u)
-	fmt.Printf("NUM: %d, ERR: %v\n", num, err)
-	if err != nil {
-		return false
-	}
-	return true
-}
-
-//Read 测试用
+//Read 读取
 func (u *User) Read() bool {
 	o := orm.NewOrm()
 	// read one
@@ -60,7 +53,19 @@ func (u *User) Read() bool {
 	return true
 }
 
-//Delete 测试用
+//Update 更新
+func (u *User) Update() bool {
+	o := orm.NewOrm()
+	// update
+	num, err := o.Update(u)
+	fmt.Printf("NUM: %d, ERR: %v\n", num, err)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+//Delete 删除
 func (u *User) Delete() bool {
 	o := orm.NewOrm()
 	// delete

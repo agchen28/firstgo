@@ -470,7 +470,7 @@ function ResetPwdRows(grid, url) {
 
 //#region 为操作授权
 function Authorize(grid, url) {
-    var param = FH.tree.treeSetting.param;
+    var param = MD.tree.treeSetting.param;
     if (param.pId == '-1' || param.id == '-1' || param.id == null || param.id == "") {
         $.messager.alert("提示", "请选中要授权的操作", "info");
         return;
@@ -485,7 +485,7 @@ function Authorize(grid, url) {
             grid.datagrid("reload");
         }
     };
-    FH.dialog.init(dialogSetting);
+    MD.dialog.init(dialogSetting);
     var setting = {
         grid: $("#grid1"),
         url: '/Authorization/AuthorizeForOperations',
@@ -570,7 +570,7 @@ function Authorize4Operator(grid, url) {
             }
         }]
     };
-    FH.dialog.init(dialogSetting);
+    MD.dialog.init(dialogSetting);
     $("#tree1").tree({
         url: "/Operation/GetOperationTree?Id=" + id,
         animate: true,
@@ -617,7 +617,7 @@ function Operator2Operator(grid, url) {
             }
         }]
     };
-    FH.dialog.init(dialogSetting);
+    MD.dialog.init(dialogSetting);
     $('#combobox').combobox({
         url: '/Operator/GetOperatorsForCombobox',
         valueField: 'id',
@@ -655,7 +655,7 @@ function Import(grid, url, fileType) {
             }
         }]
     };
-    FH.dialog.init(dialogSetting);
+    MD.dialog.init(dialogSetting);
     $('#fb').filebox({
         buttonText: '请选择文件'
     });

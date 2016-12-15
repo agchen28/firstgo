@@ -18,7 +18,7 @@ func (s *SimpleResult) Bingo() {
 	s.Msg = "成功"
 }
 
-//Error 成功
+//Error 失败
 func (s *SimpleResult) Error() {
 	s.State = 0
 	s.Msg = "失败"

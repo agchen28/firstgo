@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>后台管理</title>
+    <title>{{.Title}}</title>
     <link href="/static/css/base.css" type="text/css" rel="stylesheet" />
     <link href="/static/jquery-easyui-1.5/themes/icon.css" rel="stylesheet" type="text/css" />
     <link href="/static/jquery-easyui-1.5/themes/gray/easyui.css" rel="stylesheet" type="text/css" />
     <script src="/static/jquery-easyui-1.5/jquery.min.js" type="text/javascript"></script>
     <script src="/static/jquery-easyui-1.5/jquery.easyui.min.js" type="text/javascript"></script>
-    <script src="/static/jquery-easyui-1.5/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="/static/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
     <meta name="robots" content="noarchive" />
     <script type="text/javascript">
         if (window != top) {
@@ -49,8 +49,6 @@
             </form>
         </div>
     </div>
-    <script src="/static/js/jquery.js" type="text/javascript"></script>
-    <script src="/static/js/base.js" type="text/javascript"></script>
     <script type="text/javascript">
         var marginTop = ($(document).height() - $("#entry_box").height()) * 2 / 5;
         $("#entry_box").css("margin-top", (marginTop > 0 ? marginTop : 0) + "px").css("display", "block");

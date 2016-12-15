@@ -1,5 +1,5 @@
-﻿var FH = FH || {};
-FH.tree = {
+﻿var MD = MD || {};
+MD.tree = {
     treeSetting: {
         parentNode: true,
         param: {}

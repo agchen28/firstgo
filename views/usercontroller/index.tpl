@@ -34,15 +34,12 @@
         ],
             queryParams: {},
             newRow: {
-                ID: '',
+                ID: 0,
                 Name: ''
             },
-            addUrl: "/user/add",
+            addUrl: "/user/create",
             editUrl: '/user/update',
-            deleteUrl: '/user/delete',
-            importUrl: '/user/Import',
-            exportUrl: '/user/Export',
-            fileType: '.user'
+            deleteUrl: '/user/delete'
         }
         InitGrid(setting);
         $('#tbName').textbox({

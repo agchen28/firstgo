@@ -93,7 +93,7 @@
             deleteChildren:true
         }
         InitGrid(setting);
-        FH.tree.init(treeSetting, setting.grid);
+        MD.tree.init(treeSetting, setting.grid);
         $('#tbName').textbox({
             width: 100
         });
@@ -104,8 +104,8 @@
                 var param = {
                     username: name
                 };
-                $.extend(true, FH.tree.treeSetting.param, param);
-                setting.grid.datagrid("reload", FH.tree.treeSetting.param);
+                $.extend(true, MD.tree.treeSetting.param, param);
+                setting.grid.datagrid("reload", MD.tree.treeSetting.param);
             }
         });
     });

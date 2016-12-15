@@ -1,5 +1,5 @@
-﻿var FH = FH || {};
-FH.dialog = {
+﻿var MD = MD || {};
+MD.dialog = {
     init: function (setting) {
         setting.dialog.dialog({
             title: setting.title,
