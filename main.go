@@ -19,6 +19,7 @@ func init() {
 	}
 	common.GlobalSessions, _ = session.NewManager("memory", &config)
 	go common.GlobalSessions.GC()
+
 }
 func main() {
 	// beego.InsertFilter("/*", beego.BeforeRouter, filters.LoginFilter)

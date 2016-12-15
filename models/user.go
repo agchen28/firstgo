@@ -3,25 +3,9 @@ package models
 import (
 	"fmt"
 
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // import your used driver
 )
-
-func init() {
-	mysqluser := beego.AppConfig.String("mysqluser")
-	mysqlpass := beego.AppConfig.String("mysqlpass")
-	mysqlurls := beego.AppConfig.String("mysqlurls")
-	mysqldb := beego.AppConfig.String("mysqldb")
-	// set default database
-	orm.RegisterDataBase("default", "mysql", mysqluser+":"+mysqlpass+"@tcp("+mysqlurls+")/"+mysqldb+"?charset=utf8", 30)
-
-	// register model
-	orm.RegisterModel(new(User))
-
-	// create table
-	orm.RunSyncdb("default", false, true)
-}
 
 //User 测试用
 type User struct {
@@ -89,7 +73,7 @@ func (u *User) Paging(page int, pageSize int) ([]*User, int64) {
 	user := new(User)
 	qs = o.QueryTable(user) // 返回 QuerySeter
 	offset := (pageSize * (page - 1))
-	qs.Limit(pageSize, offset)
+	qs = qs.Limit(pageSize, offset)
 	if u.Name != "" {
 		qs = qs.Filter("name__contains", u.Name)
 	}
